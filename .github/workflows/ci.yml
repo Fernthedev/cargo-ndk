@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install dependencies (Windows only)
+        if: runner.os == 'Windows'
+        run: cpan -i Locale::Maketext::Simple
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -29,9 +32,6 @@ jobs:
       - name: Run basic example
         working-directory: example/basic
         run: cargo ndk -o jniLibs build -vv
-      - name: Install dependencies (Windows only)
-        if: runner.os == 'Windows'
-        run: cpan install Locale::Maketext::Simple
       - name: Run openssl example
         shell: bash
         working-directory: example/openssl
