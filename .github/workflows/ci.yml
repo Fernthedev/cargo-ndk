@@ -32,7 +32,9 @@ jobs:
       - name: Run openssl example
         shell: bash
         working-directory: example/openssl
-        run: cargo ndk --platform 28 build -vv
+        run: |
+          cpan install Locale::Maketext
+          cargo ndk --platform 28 build -vv
       - name: Check code formatting
         continue-on-error: true
         run: cargo fmt --all -- --check
