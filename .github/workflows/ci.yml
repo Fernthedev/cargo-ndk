@@ -29,12 +29,13 @@ jobs:
       - name: Run basic example
         working-directory: example/basic
         run: cargo ndk -o jniLibs build -vv
+      - name: Install dependencies (Windows only)
+        if: runner.os == 'Windows'
+        run: cpan install Locale::Maketext::Simple
       - name: Run openssl example
         shell: bash
         working-directory: example/openssl
-        run: |
-          cpan install Locale::Maketext::Simple
-          cargo ndk --platform 28 build -vv
+        run: cargo ndk --platform 28 build -vv
       - name: Check code formatting
         continue-on-error: true
         run: cargo fmt --all -- --check
