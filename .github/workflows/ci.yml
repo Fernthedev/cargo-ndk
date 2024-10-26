@@ -21,10 +21,6 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
-      - name: Install dependencies (Windows only)
-        if: runner.os == 'Windows'
-        shell: msys2 {0}
-        run: cpan -i Locale::Maketext::Simple
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -39,7 +35,7 @@ jobs:
         working-directory: example/basic
         run: cargo ndk -o jniLibs build -vv
       - name: Run openssl example
-        shell: bash
+        shell: msys2 {0}
         working-directory: example/openssl
         run: cargo ndk --platform 28 build -vv
       - name: Check code formatting
