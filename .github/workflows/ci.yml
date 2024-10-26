@@ -16,9 +16,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install MSYS (Windows only)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
       - name: Install dependencies (Windows only)
         if: runner.os == 'Windows'
-        shell: bash
+        shell: msys2 {0}
         run: cpan -i Locale::Maketext::Simple
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
