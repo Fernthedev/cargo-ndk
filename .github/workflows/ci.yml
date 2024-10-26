@@ -33,7 +33,7 @@ jobs:
         shell: bash
         working-directory: example/openssl
         run: |
-          cpan install Locale::Maketext
+          cpan install Locale::Maketext::Simple
           cargo ndk --platform 28 build -vv
       - name: Check code formatting
         continue-on-error: true
